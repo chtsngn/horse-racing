@@ -8,7 +8,7 @@
 
         <q-card-section class="q-pa-none" v-for="round in rounds" :key="round.id">
           <q-card square flat>
-            <q-card-section class="bg-red text-white q-pa-xs text-center">
+            <q-card-section class="bg-grey text-white q-pa-xs text-center">
               <div class="text-body">
                 {{ round.name }}
               </div>
