@@ -28,13 +28,14 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapActions } from 'vuex'
 
 import HorseList from '../components/HorseList.vue'
 import Game from '../components/Game.vue'
 import ProgramResults from '../components/ProgramResults.vue'
 
-const { mapGetters: mapProgramGetters } = createNamespacedHelpers('program')
+const { mapGetters: mapProgramGetters, mapActions: mapProgramActions } =
+  createNamespacedHelpers('program')
 
 export default defineComponent({
   name: 'IndexPage',
@@ -45,6 +46,18 @@ export default defineComponent({
   },
   computed: {
     ...mapProgramGetters(['racingProgramCount']),
+  },
+  mounted() {
+    this.init()
+  },
+  methods: {
+    ...mapActions(['createHorses']),
+    ...mapProgramActions(['createRacingProgram']),
+
+    async init() {
+      await this.createHorses(20)
+      await this.createRacingProgram(6)
+    },
   },
 })
 </script>

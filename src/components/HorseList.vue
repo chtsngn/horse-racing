@@ -44,7 +44,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'HorseListComponent',
@@ -72,16 +72,6 @@ export default defineComponent({
   computed: {
     ...mapState(['horses']),
     ...mapGetters(['horsesCount']),
-  },
-  mounted() {
-    this.init()
-  },
-  methods: {
-    ...mapActions(['createHorses']),
-
-    init() {
-      this.createHorses(20)
-    },
   },
 })
 </script>

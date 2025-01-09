@@ -154,7 +154,7 @@ export const getUniqueColors = (length) => {
 }
 
 export const generateRandomStringId = () => {
-  return Math.random().toString(36)
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
 export const generateRandomCondition = (start = 1, end = 100) => {
