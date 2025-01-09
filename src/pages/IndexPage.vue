@@ -2,18 +2,28 @@
   <q-page>
     <div class="row q-col-gutter-sm q-pt-md">
       <!-- Horses List-->
-      <div class="col-3">
+      <div
+        class="col-12 col-sm-6 col-md-3"
+        :style="{
+          order: isScreenMdAndDown ? 2 : 1,
+        }"
+      >
         <HorseList />
       </div>
 
       <template v-if="racingProgramCount">
         <!-- Game -->
-        <div class="col-6">
+        <div
+          class="col-12 col-md-6"
+          :style="{
+            order: isScreenMdAndDown ? 1 : 2,
+          }"
+        >
           <Game />
         </div>
 
         <!-- Results -->
-        <div class="col-3">
+        <div class="col-12 col-sm-6 col-md-3" style="order: 3">
           <ProgramResults />
         </div>
       </template>
@@ -46,6 +56,9 @@ export default defineComponent({
   },
   computed: {
     ...mapProgramGetters(['racingProgramCount']),
+    isScreenMdAndDown() {
+      return this.$q.screen.lt.md
+    },
   },
   mounted() {
     this.init()

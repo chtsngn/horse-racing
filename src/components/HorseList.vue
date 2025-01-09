@@ -1,8 +1,8 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <q-card square>
-        <q-card-section class="bg-warning text-white q-pa-sm">
+      <q-card square class="i-scrollable">
+        <q-card-section class="bg-warning text-white q-pa-sm i-scrollable--header">
           <div class="text-h6">Horse List (1-{{ horsesCount }})</div>
         </q-card-section>
 
