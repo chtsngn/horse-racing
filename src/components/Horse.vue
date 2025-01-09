@@ -1,5 +1,7 @@
 <template>
-  <div class="horse" :style="horseStyle"></div>
+  <div class="horse" :style="horseStyle">
+    <div class="horse-name text-caption">{{ name }}</div>
+  </div>
 </template>
 
 <script>
@@ -16,6 +18,10 @@ export default defineComponent({
     isRunning: {
       type: Boolean,
       default: true,
+    },
+    name: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -57,7 +63,6 @@ export default defineComponent({
   methods: {
     init() {
       // get sheet width
-      console.log(horseSheet)
       const sheet = new Image()
       sheet.src = horseSheet
       sheet.onload = () => {
@@ -87,4 +92,13 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.horse-name {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+</style>

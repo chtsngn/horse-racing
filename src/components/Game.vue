@@ -3,12 +3,8 @@
     <div class="col-12 text-center text-h6 text-bold q-mt-sm">
       <div class="row">
         <div class="col-3"></div>
-        <div class="col-6">
-          Active Round: {{ racingActiveRound.name }} ({{ racingActiveRound.sequence }}m)
-        </div>
-        <div class="col-3 text-right">
-          <q-btn color="primary" label="Next" @click="nextRound()" icon-right="arrow_forward" />
-        </div>
+        <div class="col-6">{{ racingActiveRound.name }} ({{ racingActiveRound.sequence }}m)</div>
+        <div class="col-3 text-right text-red text-bold text-h6">Finish</div>
       </div>
     </div>
 
@@ -20,7 +16,14 @@
     >
       <div class="row items-center q-col-gutter-sm i-lane--item">
         <div class="col-auto i-lane--position-wrapper">
-          <div class="text-h6 text-center i-lane--position">{{ index + 1 }}</div>
+          <div
+            class="text-h6 text-center i-lane--position"
+            :style="{
+              backgroundColor: horse.color,
+            }"
+          >
+            <div class="text-h6 text-center">{{ index + 1 }}</div>
+          </div>
         </div>
 
         <div class="col i-lane--lane">
@@ -35,6 +38,7 @@
                 isRoundStarted && !isRoundPaused && !isRoundFinished && !horse.finishedTime
               "
               :scale="1"
+              :name="horse.name"
             />
           </div>
         </div>
@@ -99,7 +103,7 @@ export default defineComponent({
     }, 1000)
   },
   methods: {
-    ...mapProgramActions(['setHorseFinished', 'nextRound']),
+    ...mapProgramActions(['setHorseFinished']),
   },
 })
 </script>
@@ -119,8 +123,7 @@ export default defineComponent({
 }
 
 .i-lane--position {
-  writing-mode: sideways-lr;
-  text-orientation: sideways;
+  border-radius: 4px;
 }
 
 .i-lane--item {

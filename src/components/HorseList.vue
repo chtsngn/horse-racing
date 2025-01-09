@@ -15,26 +15,18 @@
             row-key="id"
             :rows-per-page-options="[0]"
           >
-            <!-- <template v-slot:body-cell-name="props">
+            <template v-slot:body-cell-color="props">
               <q-td :props="props">
-                <div>
-                  <q-badge color="purple" :label="props.value" />
+                <div class="row q-col-gutter-xs">
+                  <div class="col-auto">
+                    <q-badge
+                      :style="{ backgroundColor: props.value, width: '12px', height: '12px' }"
+                    />
+                  </div>
+                  <div class="col">{{ props.value }}</div>
                 </div>
               </q-td>
-            </template> -->
-            <!-- <template v-slot:body="props">
-              <q-tr :props="props">
-                <q-td key="name" :props="props">
-                  <div>{{ props.row.name }}</div>
-                </q-td>
-                <q-td key="condition" :props="props">
-                  <div>{{ props.row.condition }}</div>
-                </q-td>
-                <q-td key="color" :props="props">
-                  <div>{{ props.row.color }}</div>
-                </q-td>
-              </q-tr>
-            </template> -->
+            </template>
           </q-table>
         </q-card-section>
       </q-card>
@@ -54,16 +46,22 @@ export default defineComponent({
         {
           label: 'Name',
           field: 'name',
+          name: 'name',
+          align: 'center',
           sortable: true,
         },
         {
           label: 'Condition',
+          name: 'condition',
           field: 'condition',
+          align: 'center',
           sortable: true,
         },
         {
           label: 'Color',
           field: 'color',
+          name: 'color',
+          align: 'center',
           sortable: true,
         },
       ],

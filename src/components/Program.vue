@@ -15,15 +15,7 @@
             </q-card-section>
 
             <q-card-section class="q-pa-none">
-              <q-table
-                square
-                dense
-                hide-bottom
-                flat
-                :rows="round.horses"
-                :columns="headers"
-                :rows-per-page-options="[0]"
-              />
+              <RoundPositionTable :rows="round.horses" :columns="headers" />
             </q-card-section>
           </q-card>
         </q-card-section>
@@ -34,17 +26,21 @@
 
 <script>
 import { defineComponent } from 'vue'
+import RoundPositionTable from './RoundPositionTable.vue'
 import { createNamespacedHelpers } from 'vuex'
 
 const { mapState: mapProgramState } = createNamespacedHelpers('program')
 
 export default defineComponent({
   name: 'ProgramComponent',
+  components: {
+    RoundPositionTable,
+  },
   data() {
     return {
       headers: [
-        { label: 'Position', field: 'startPosition', sortable: true },
-        { label: 'Name', field: 'name', sortable: true },
+        { label: 'Position', field: 'position', align: 'center', name: 'position' },
+        { label: 'Name', field: 'name', align: 'center', name: 'name' },
       ],
     }
   },
