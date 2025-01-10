@@ -6,7 +6,12 @@
           <div class="text-h6">Program</div>
         </q-card-section>
 
-        <q-card-section class="q-pa-none" v-for="(round, index) in racingProgram" :key="round.id">
+        <q-card-section
+          class="q-pa-none"
+          v-for="(round, index) in racingProgram"
+          :key="round.id"
+          ref="rounds"
+        >
           <q-card square flat :class="{ 'i-pulse': index === activeRoundIndex }">
             <q-card-section
               class="text-white q-pa-xs text-center i-scrollable--header-sub"
@@ -49,6 +54,14 @@ export default defineComponent({
   },
   computed: {
     ...mapProgramState(['racingProgram', 'activeRoundIndex']),
+  },
+  watch: {
+    activeRoundIndex() {
+      this.$refs.rounds[this.activeRoundIndex]?.$el?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    },
   },
 })
 </script>
