@@ -48,7 +48,10 @@
     <q-dialog v-model="resultDialog" backdrop-filter="blur(4px) grayscale(100%)">
       <q-card class="i-dialog">
         <q-card-section class="bg-positive text-white q-pa-sm i-scrollable--header">
-          <div class="text-h6">Results</div>
+          <div class="row justify-between items-center">
+            <div class="text-h6">Results</div>
+            <q-btn @click="closeResultDialog" icon="close" flat round />
+          </div>
         </q-card-section>
 
         <q-card-section class="q-pa-none">
@@ -144,6 +147,9 @@ export default defineComponent({
     ...mapProgramActions(['setHorseFinished']),
     showResultDialog() {
       this.resultDialog = true
+    },
+    closeResultDialog() {
+      this.resultDialog = false
     },
   },
 })
