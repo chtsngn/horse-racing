@@ -50,7 +50,7 @@
         <q-card-section class="bg-positive text-white q-pa-sm i-scrollable--header">
           <div class="row justify-between items-center">
             <div class="text-h6">Results</div>
-            <q-btn @click="closeResultDialog" icon="close" flat round />
+            <q-btn size="sm" @click="closeResultDialog" icon="close" flat round />
           </div>
         </q-card-section>
 
