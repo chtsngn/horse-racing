@@ -68,7 +68,7 @@ export default {
       const interval = setInterval(() => {
         for (let i = 0; i < horsesCount; i++) {
           const horse = getters.racingActiveRound.horses[i]
-          const randomBoost = Math.random() * 100
+          const randomBoost = Math.random() * 10
 
           if (!horse.finishedTime) {
             horse.activePosition += horse.condition / 100 + randomBoost
