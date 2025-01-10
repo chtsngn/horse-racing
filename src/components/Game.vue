@@ -56,11 +56,10 @@
 
         <q-card-section class="q-pa-none">
           <div class="row q-col-gutter-sm">
-            <div class="col-6" v-for="(round, index) in racingResults" :key="round.id">
-              <q-card square flat :class="{ 'i-pulse': index === activeRoundIndex }">
+            <div class="col-6" v-for="round in racingResults" :key="round.id">
+              <q-card square flat>
                 <q-card-section
-                  class="text-white q-pa-xs text-center i-scrollable--header-sub"
-                  :class="[index === activeRoundIndex ? 'bg-positive' : 'bg-grey']"
+                  class="text-white q-pa-xs text-center i-scrollable--header-sub bg-grey"
                 >
                   <div class="text-body">
                     {{ round.name }}
