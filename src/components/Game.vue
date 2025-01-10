@@ -54,10 +54,10 @@
           </div>
         </q-card-section>
 
-        <q-card-section class="q-pa-none">
+        <q-card-section>
           <div class="row q-col-gutter-sm">
             <div class="col-6" v-for="round in racingResults" :key="round.id">
-              <q-card square flat>
+              <q-card square flat bordered>
                 <q-card-section
                   class="text-white q-pa-xs text-center i-scrollable--header-sub bg-grey"
                 >
