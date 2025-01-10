@@ -44,6 +44,35 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="resultDialog" backdrop-filter="blur(4px) grayscale(100%)">
+      <q-card class="i-dialog">
+        <q-card-section class="bg-positive text-white q-pa-sm i-scrollable--header">
+          <div class="text-h6">Results</div>
+        </q-card-section>
+
+        <q-card-section class="q-pa-none">
+          <div class="row q-col-gutter-sm">
+            <div class="col-6" v-for="(round, index) in racingResults" :key="round.id">
+              <q-card square flat :class="{ 'i-pulse': index === activeRoundIndex }">
+                <q-card-section
+                  class="text-white q-pa-xs text-center i-scrollable--header-sub"
+                  :class="[index === activeRoundIndex ? 'bg-positive' : 'bg-grey']"
+                >
+                  <div class="text-body">
+                    {{ round.name }}
+                  </div>
+                </q-card-section>
+
+                <q-card-section class="q-pa-none">
+                  <RoundPositionTable :rows="round.horses" :columns="headers" />
+                </q-card-section>
+              </q-card>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -51,7 +80,7 @@
 import { defineComponent } from 'vue'
 import { createNamespacedHelpers } from 'vuex'
 import Horse from './Horse.vue'
-
+import RoundPositionTable from './RoundPositionTable.vue'
 const {
   mapGetters: mapProgramGetters,
   mapState: mapProgramState,
@@ -62,14 +91,20 @@ export default defineComponent({
   name: 'GameComponent',
   components: {
     Horse,
+    RoundPositionTable,
   },
   data() {
     return {
       laneWidth: 0,
+      resultDialog: false,
+      headers: [
+        { label: 'Position', field: 'position', align: 'center', name: 'position' },
+        { label: 'Name', field: 'name', align: 'center', name: 'name' },
+      ],
     }
   },
   computed: {
-    ...mapProgramState(['raceInterval']),
+    ...mapProgramState(['raceInterval', 'activeRoundIndex', 'racingResults', 'raceFinished']),
     ...mapProgramGetters([
       'racingActiveRound',
       'isRoundStarted',
@@ -91,6 +126,9 @@ export default defineComponent({
         })
       },
     },
+    raceFinished() {
+      this.showResultDialog()
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -104,6 +142,9 @@ export default defineComponent({
   },
   methods: {
     ...mapProgramActions(['setHorseFinished']),
+    showResultDialog() {
+      this.resultDialog = true
+    },
   },
 })
 </script>
@@ -140,5 +181,10 @@ export default defineComponent({
   top: 50%;
   transition: all 0.6s ease-out;
   transform: translateY(-50%);
+}
+
+.i-dialog {
+  width: 700px;
+  max-width: 80vw;
 }
 </style>

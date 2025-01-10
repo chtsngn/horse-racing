@@ -9,6 +9,7 @@ export default {
     activeRoundIndex: 0,
     raceInterval: null,
     raceIntervalDuration: 100,
+    raceFinished: false,
   },
   mutations: {
     setRacingProgram(state, payload) {
@@ -47,7 +48,7 @@ export default {
           horses: horsesDeepCopy,
           roundStarted: false,
           roundPaused: false,
-          raceFinished: false,
+          roundFinished: false,
         })
       }
 
@@ -58,6 +59,7 @@ export default {
     startRound({ dispatch, state, getters, commit }) {
       dispatch('setRoundStarted', true)
       dispatch('setRoundPaused', false)
+      dispatch('setRoundFinished', false)
       dispatch('setRaceFinished', false)
 
       // run horses with their condition
@@ -66,7 +68,7 @@ export default {
       const interval = setInterval(() => {
         for (let i = 0; i < horsesCount; i++) {
           const horse = getters.racingActiveRound.horses[i]
-          const randomBoost = Math.random() * 10
+          const randomBoost = Math.random() * 100
 
           if (!horse.finishedTime) {
             horse.activePosition += horse.condition / 100 + randomBoost
@@ -108,7 +110,7 @@ export default {
       commit('setRaceInterval', null)
       dispatch('setRoundPaused', false)
       dispatch('setRoundStarted', false)
-      dispatch('setRaceFinished', true)
+      dispatch('setRoundFinished', true)
 
       dispatch('nextRound')
     },
@@ -121,8 +123,11 @@ export default {
     setRoundPaused({ getters }, payload) {
       getters.racingActiveRound.roundPaused = payload
     },
-    setRaceFinished({ getters }, payload) {
-      getters.racingActiveRound.raceFinished = payload
+    setRoundFinished({ getters }, payload) {
+      getters.racingActiveRound.roundFinished = payload
+    },
+    setRaceFinished({ state }, payload) {
+      state.raceFinished = payload
     },
     setHorseFinished({ getters }, { id }) {
       const finishedTime = Date.now()
@@ -134,12 +139,14 @@ export default {
       horseForRacing.finishedTime = finishedTime
     },
     nextRound({ state, commit, dispatch }) {
-      if (state.activeRoundIndex < state.racingProgram.length - 1) {
+      if (state.activeRoundIndex + 1 < state.racingProgram.length) {
         commit('setActiveRoundIndex', state.activeRoundIndex + 1)
 
-        dispatch('setRaceFinished', false)
+        dispatch('setRoundFinished', false)
         dispatch('setRoundStarted', false)
         dispatch('setRoundPaused', false)
+      } else {
+        dispatch('setRaceFinished', true)
       }
     },
   },
@@ -154,7 +161,7 @@ export default {
       return state.racingResults[state.activeRoundIndex]
     },
     isRoundFinished(_, getters) {
-      return getters.racingActiveRound?.raceFinished
+      return getters.racingActiveRound?.roundFinished
     },
     isRoundStarted(_, getters) {
       return getters.racingActiveRound?.roundStarted
